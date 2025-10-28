@@ -1,0 +1,24 @@
+# .gitignore
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Terraform
+# Never commit tfstate files
+*.tfstate
+*.tfstate.*
+
+# Never commit local terraform working directory
+.terraform/
+
+# Never commit terraform plan files
+*.tfplan
+
+# Never commit crash logs
+crash.log
+
+# VSCode
+.vscode/
