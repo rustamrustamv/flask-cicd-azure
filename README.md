@@ -42,7 +42,6 @@ graph TD
     end
 
 ```
----
 
 **Part 4: Core Tech (This is the important one!)**
 ```markdown
@@ -56,7 +55,7 @@ graph TD
 * **Hosting:** Azure Web App for Containers
 * **Scripting:** Bash, Python
 * **Security:** Azure Managed Identity, RBAC, GitHub Secrets
-
+```
 ## Project Screenshots
 ### 1. Successful CI/CD Pipeline
 This shows the automated GitHub Actions workflow successfully building and deploying the application.
