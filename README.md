@@ -89,25 +89,23 @@ This is the final result: the containerized application running live on its Azur
         * Uses the **Azure CLI** (`az webapp config container set`) to forcefully update the App Service to use the new container image.
         * Uses `az webapp config appsettings set` to ensure the `WEBSITES_PORT` is correctly configured, preventing deployment fallbacks.
 
-How to Run Locally
-Clone the repository.
+## How to Run Locally
 
-Ensure you have Docker Desktop installed.
+1.  Clone the repository.
+2.  Ensure you have Docker Desktop installed.
+3.  Run the following commands:
 
-Run the following commands:
+    ```bash
+    # Build the image
+    docker build -t flask-app-local .
 
-Bash
+    # Run the container
+    docker run -d -p 8080:8000 --name flask-test flask-app-local
+    ```
+4.  Access the application at `http://localhost:8080`.
 
-# Build the image
-docker build -t flask-app-local .
+## Future Improvements
 
-# Run the container
-docker run -d -p 8080:8000 --name flask-test flask-app-local
-Access the application at http://localhost:8080.
-
-Future Improvements
-Implement Monitoring: Integrate Azure Monitor or Prometheus/Grafana to track application uptime and performance.
-
-Tagging Strategy: Use Git tags or commit hashes for Docker image versions instead of just :latest for better version control.
-
-Staging Environment: Create a second Terraform environment for staging to test changes before deploying to prod.
+* **Implement Monitoring:** Integrate Azure Monitor or Prometheus/Grafana to track application uptime and performance.
+* **Tagging Strategy:** Use Git tags or commit hashes for Docker image versions instead of just `:latest` for better version control.
+* **Staging Environment:** Create a second Terraform environment for `staging` to test changes before deploying to `prod`.
