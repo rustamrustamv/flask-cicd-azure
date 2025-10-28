@@ -40,6 +40,8 @@ graph TD
     E
     G
     end
+
+```
 ---
 
 **Part 4: Core Tech (This is the important one!)**
