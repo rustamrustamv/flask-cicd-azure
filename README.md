@@ -42,8 +42,8 @@ graph TD
     end
 ```
 
-Core Technologies & Skills Demonstrated
-Cloud: Microsoft Azure
+## Core Technologies & Skills Demonstrated
+* **Cloud:** Microsoft Azure
 
 Containerization: Docker
 
@@ -59,8 +59,8 @@ Scripting: Bash, Python
 
 Security: Azure Managed Identity, RBAC, GitHub Secrets
 
-Project Screenshots
-1. Successful CI/CD Pipeline
+## Project Screenshots
+### 1. Successful CI/CD Pipeline
 This shows the automated GitHub Actions workflow successfully building and deploying the application.
 
 2. Live Deployed Application
