@@ -2,7 +2,7 @@
 
 # End-to-End CI/CD Pipeline for a Containerized Python App on Azure
 
-**Live Application URL:** [https://YOUR_WEBAPP_HOSTNAME](https://YOUR_WEBAPP_HOSTNAME)
+**Live Application URL:** [https://app-flaskapp-s3r7gh.azurewebsites.net/](https://app-flaskapp-s3r7gh.azurewebsites.net)
 
 This project demonstrates a complete, end-to-end DevOps workflow. A Python Flask application is containerized with Docker, its infrastructure is provisioned on Microsoft Azure using Terraform (IaC), and the entire build-and-deploy process is automated with a GitHub Actions CI/CD pipeline.
 
@@ -40,24 +40,20 @@ graph TD
     E
     G
     end
-```
+---
 
+**Part 4: Core Tech (This is the important one!)**
+```markdown
 ## Core Technologies & Skills Demonstrated
+
 * **Cloud:** Microsoft Azure
-
-Containerization: Docker
-
-Infrastructure as Code (IaC): Terraform
-
-CI/CD: GitHub Actions
-
-Container Registry: Azure Container Registry (ACR)
-
-Hosting: Azure Web App for Containers
-
-Scripting: Bash, Python
-
-Security: Azure Managed Identity, RBAC, GitHub Secrets
+* **Containerization:** Docker
+* **Infrastructure as Code (IaC):** Terraform
+* **CI/CD:** GitHub Actions
+* **Container Registry:** Azure Container Registry (ACR)
+* **Hosting:** Azure Web App for Containers
+* **Scripting:** Bash, Python
+* **Security:** Azure Managed Identity, RBAC, GitHub Secrets
 
 ## Project Screenshots
 ### 1. Successful CI/CD Pipeline
