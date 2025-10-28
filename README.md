@@ -53,13 +53,18 @@ graph TD
 * **Hosting:** Azure Web App for Containers
 * **Scripting:** Bash, Python
 * **Security:** Azure Managed Identity, RBAC, GitHub Secrets
-```
-## Project Screenshots
-### 1. Successful CI/CD Pipeline
-This shows the automated GitHub Actions workflow successfully building and deploying the application.
 
-2. Live Deployed Application
+## Project Screenshots
+
+### 1. Successful CI/CD Pipeline
+
+This shows the automated GitHub Actions workflow successfully building and deploying the application.
+![Successful Pipeline Run](screenshots/pipeline-success.png)
+
+### 2. Live Deployed Application
+
 This is the final result: the containerized application running live on its Azure public URL.
+![Live Application](screenshots/live-app.png)
 
 How It Works
 Infrastructure (/terraform):
