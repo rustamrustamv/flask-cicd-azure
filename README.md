@@ -39,8 +39,9 @@ graph TD
     subgraph "Cloud Platform (Azure)"
     E
     G
-    end ```
-    
+    end
+```
+
 Core Technologies & Skills Demonstrated
 Cloud: Microsoft Azure
 
