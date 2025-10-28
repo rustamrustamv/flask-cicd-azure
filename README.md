@@ -42,9 +42,7 @@ graph TD
     end
 
 
-
-
-    Core Technologies & Skills Demonstrated
+Core Technologies & Skills Demonstrated
 Cloud: Microsoft Azure
 
 Containerization: Docker
