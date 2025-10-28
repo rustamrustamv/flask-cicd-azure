@@ -43,8 +43,6 @@ graph TD
 
 ```
 
-**Part 4: Core Tech (This is the important one!)**
-```markdown
 ## Core Technologies & Skills Demonstrated
 
 * **Cloud:** Microsoft Azure
