@@ -75,7 +75,7 @@ resource "azurerm_linux_web_app" "webapp" {
   app_settings = {
     "GREETING"                        = "Hello from Azure!"
     "WEBSITES_ENABLE_APP_SERVICE_STORAGE" = "false"
-    # We removed DOCKER_REGISTRY_SERVER_URL because it conflicts
+    "WEBSITES_PORT"                   = "8000" # Tell Azure our app is on port 8000
     # with the Managed Identity and role assignment.
   }
 }
