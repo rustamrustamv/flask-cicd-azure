@@ -1,0 +1,85 @@
+# .github/workflows/main.yml
+
+# Name your workflow
+name: Build and Deploy to Azure Web App
+
+# --- Trigger ---
+# This workflow runs on any 'push' event to the 'main' branch
+on:
+  push:
+    branches:
+      - main
+
+# --- Environment Variables ---
+# Set variables used across jobs.
+# Get the ACR login server from our GitHub Secret.
+env:
+  ACR_LOGIN_SERVER: ${{ secrets.ACR_LOGIN_SERVER }}
+  IMAGE_NAME: my-flask-app # The name of our docker image
+
+# --- Jobs ---
+# A workflow is made of one or more jobs that run in parallel or sequentially.
+jobs:
+  # --- Build Job ---
+  # This job builds and pushes the Docker image.
+  build:
+    name: Build and Push Docker Image
+    runs-on: ubuntu-latest # Run this job on a GitHub-hosted Linux runner
+
+    steps:
+      # 1. Checkout Code
+      - name: Checkout repository
+        uses: actions/checkout@v3 # Action to get our source code
+
+      # 2. Log in to Azure Container Registry (ACR)
+      - name: Log in to ACR
+        uses: azure/docker-login@v1
+        with:
+          login-server: ${{ env.ACR_LOGIN_SERVER }}
+          username: ${{ secrets.ACR_USERNAME }}
+          password: ${{ secrets.ACR_PASSWORD }}
+
+      # 3. Build and Push Docker Image
+      - name: Build and push image to ACR
+        run: |
+          # Build the docker image
+          docker build -t $ACR_LOGIN_SERVER/$IMAGE_NAME:latest .
+
+          # Push the image to ACR
+          docker push $ACR_LOGIN_SERVER/$IMAGE_NAME:latest
+
+  # --- Deploy Job ---
+  # This job deploys the new image to the Web App.
+  deploy:
+    name: Deploy to Azure Web App
+    runs-on: ubuntu-latest
+
+    # This job "needs" the 'build' job to finish successfully first
+    needs: build
+
+    steps:
+      # 1. Log in to Azure
+      - name: Log in to Azure
+        uses: azure/login@v1
+        with:
+          creds: |
+            {
+              "clientId": "${{ secrets.AZURE_CLIENT_ID }}",
+              "clientSecret": "${{ secrets.AZURE_CLIENT_SECRET }}",
+              "tenantId": "${{ secrets.AZURE_TENANT_ID }}",
+              "subscriptionId": "${{ secrets.AZURE_SUBSCRIPTION_ID }}"
+            }
+
+      # 2. Deploy to Azure Web App
+      - name: Deploy to Web App for Containers
+        uses: azure/webapps-deploy@v2
+        with:
+          # This must match the Web App name from your Terraform file
+          # We are hardcoding this. A more advanced setup would use 
+          # Terraform outputs, but this is simpler and effective.
+          app-name: app-flaskapp-${{ secrets.ACR_LOGIN_SERVER | split: '.' | first | replace: 'acrflaskapp', '' }}
+
+          # This is the magic!
+          # This command tells Azure to update the Web App to use a container,
+          # and points it to the image we just pushed.
+          images: ${{ env.ACR_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}:latest
