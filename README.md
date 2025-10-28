@@ -66,42 +66,28 @@ This shows the automated GitHub Actions workflow successfully building and deplo
 This is the final result: the containerized application running live on its Azure public URL.
 ![Live Application](screenshots/live-app.png)
 
-How It Works
-Infrastructure (/terraform):
+## How It Works
 
-Terraform code defines all necessary Azure resources: a Resource Group, Container Registry, App Service Plan, and the App Service itself.
+1.  **Infrastructure (`/terraform`):**
+    * Terraform code defines all necessary Azure resources: a Resource Group, Container Registry, App Service Plan, and the App Service itself.
+    * It securely configures the App Service to use a **Managed Identity** with `AcrPull` rights, allowing it to securely pull images from the registry without storing passwords.
+    * The `WEBSITES_PORT` is set to `8000` to match the container's Gunicorn server.
 
-It securely configures the App Service to use a Managed Identity with AcrPull rights, allowing it to securely pull images from the registry without storing passwords.
+2.  **Application (`/app.py`, `Dockerfile`):**
+    * A simple Python Flask app.
+    * A multi-stage `Dockerfile` builds the application into a lightweight, production-ready container.
 
-The WEBSITES_PORT is set to 8000 to match the container's Gunicorn server.
-
-Application (/app.py, Dockerfile):
-
-A simple Python Flask app.
-
-A multi-stage Dockerfile builds the application into a lightweight, production-ready container.
-
-CI/CD Pipeline (.github/workflows/main.yml):
-
-Trigger: The workflow runs on every push to the main branch.
-
-Job 1: Build & Push:
-
-Logs into Azure Container Registry using repository secrets.
-
-Builds the Docker image from the Dockerfile.
-
-Tags the image with :latest and the ACR login server.
-
-Pushes the new image to ACR.
-
-Job 2: Deploy:
-
-Logs into Azure using a Service Principal (stored as a GitHub Secret).
-
-Uses the Azure CLI (az webapp config container set) to forcefully update the App Service to use the new container image.
-
-Uses az webapp config appsettings set to ensure the WEBSITES_PORT is correctly configured, preventing deployment fallbacks.
+3.  **CI/CD Pipeline (`.github/workflows/main.yml`):**
+    * **Trigger:** The workflow runs on every `push` to the `main` branch.
+    * **Job 1: Build & Push:**
+        * Logs into Azure Container Registry using repository secrets.
+        * Builds the Docker image from the `Dockerfile`.
+        * Tags the image with `:latest` and the ACR login server.
+        * Pushes the new image to ACR.
+    * **Job 2: Deploy:**
+        * Logs into Azure using a Service Principal (stored as a GitHub Secret).
+        * Uses the **Azure CLI** (`az webapp config container set`) to forcefully update the App Service to use the new container image.
+        * Uses `az webapp config appsettings set` to ensure the `WEBSITES_PORT` is correctly configured, preventing deployment fallbacks.
 
 How to Run Locally
 Clone the repository.
