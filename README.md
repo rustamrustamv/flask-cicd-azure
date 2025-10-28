@@ -1,4 +1,4 @@
-[![Build and Deploy to Azure Web App](https://github.com/YOUR_USERNAME/YOUR_REPO/actions/workflows/main.yml/badge.svg)](https://github.com/YOUR_USERNAME/YOUR_REPO/actions/workflows/main.yml)
+[![Build and Deploy to Azure Web App](https://github.com/rustamrustamv/flask-cicd-azure/actions/workflows/main.yml/badge.svg)](https://github.com/rustamrustamv/flask-cicd-azure/actions/workflows/main.yml)
 
 # End-to-End CI/CD Pipeline for a Containerized Python App on Azure
 
