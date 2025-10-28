@@ -71,16 +71,21 @@ jobs:
             }
 
       # 2. Deploy to Azure Web App
-      - name: Deploy to Web App for Containers
-        uses: azure/webapps-deploy@v2
+      - name: Configure and Restart Web App
+        uses: azure/cli@v1
         with:
-          # This must match the Web App name from your Terraform file  
-          # We are hardcoding this. A more advanced setup would use 
-          # Terraform outputs, but this is simpler and effective.  
-          app-name: ${{ secrets.AZURE_WEBAPP_NAME }} # set this secret to your actual Web App name
-          
-          # This is the magic!
-          # This command tells Azure to update the Web App to use a container,
-          # and points it to the image we just pushed.
+            inlineScript: |
+              echo "STEP 1: Setting container configuration..."
+              az webapp config container set \
+                --name ${{ secrets.AZURE_WEBAPP_NAME }} \
+                --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }} \
+                --docker-custom-image-name ${{ env.ACR_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}:latest \
+                --docker-registry-server-url https://${{ env.ACR_LOGIN_SERVER }}
 
-          images: ${{ env.ACR_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}:latest # Image to deploy
+              echo "STEP 2: Setting App Settings (WEBSITES_PORT)..."
+              az webapp config appsettings set \
+                --name ${{ secrets.AZURE_WEBAPP_NAME }} \
+                --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }} \
+                --settings WEBSITES_PORT=8000 GREETING="Hello from Azure CLI"
+
+              echo "Settings applied. App is restarting."
